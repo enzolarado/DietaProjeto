@@ -42,10 +42,10 @@ class MainHome extends StatelessWidget {
           color: Colors.red,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Icon(Icons.home, color: Colors.white),
-              Icon(Icons.search, color: Colors.white),
-              Icon(Icons.person, color: Colors.white),
+            children: [
+              IconButton(onPressed: () {}, icon: const Icon(Icons.home)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
             ],
           ),
         ),
