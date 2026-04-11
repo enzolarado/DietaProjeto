@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydiet/app/features/home/main_home.dart';
+import 'package:mydiet/app/pages/main_homepage.dart';
 
 
 class App extends StatelessWidget {

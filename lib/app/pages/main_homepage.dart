@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'adicionarAlimento_page.dart';
+import 'adicionarRefeicao_page.dart';
+
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
  
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -8,6 +13,25 @@ class MainHome extends StatefulWidget {
 }
 
 class _MainHomeState extends State<MainHome> {
+
+  void adicionarAlimento() {
+      Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AdicionarAlimento(),
+      ),
+    );
+}
+
+void adicionarRefeicao() {
+  Navigator.push(
+    context, 
+    MaterialPageRoute(
+      builder: (_) => AdicionarRefeicao()
+      )
+    );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +82,32 @@ class _MainHomeState extends State<MainHome> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+     
+        children: [
+          SpeedDialChild(
+            child: Icon(FontAwesomeIcons.appleWhole),
+            label: "Alimento",
+            onTap: () {
+              adicionarAlimento();
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.flatware_outlined),
+            label: "Refeição",
+            onTap: () {
+              adicionarRefeicao();
+            },
+          ),
+        ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+   
     );
   }
+  
+  
 }
+
