@@ -7,7 +7,7 @@ class CampoTexto extends StatelessWidget {
   final IconData? icone;
   final String? textoSufixo;
   final bool apenasNumeros;
-  final String erroVazio; 
+  final String erroVazio;
 
   const CampoTexto({
     super.key,
@@ -16,32 +16,56 @@ class CampoTexto extends StatelessWidget {
     this.icone,
     this.textoSufixo,
     required this.apenasNumeros,
-    required this.erroVazio
+    required this.erroVazio,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      style: const TextStyle(fontSize: 22),
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: label,
-        prefixIcon: icone != null ? Icon(icone) : null,
-        suffix: textoSufixo != null ?
-         Text(textoSufixo.toString()) : null, 
-      ),
-      keyboardType: apenasNumeros ? TextInputType.number : TextInputType.text,
-      inputFormatters: apenasNumeros ? [FilteringTextInputFormatter.digitsOnly] : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: SizedBox(
+        height: 60, // 👈 controla altura
+        child: TextFormField(
+          controller: controller,
+          style: const TextStyle(fontSize: 18), // 👈 texto um pouco menor
+          decoration: InputDecoration(
+            labelText: label,
+            prefixIcon: icone != null ? Icon(icone) : null,
 
-      validator: (value) {
-                  if (value!.isEmpty) {
-                    return erroVazio;
-                  }
-                  return null;
-                },
+            // 👇 borda arredondada
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(width: 2),
+            ),
+
+            // 👇 espaço interno (deixa mais "gordinho")
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 12,
+            ),
+
+            suffixText: textoSufixo,
+          ),
+          keyboardType: apenasNumeros
+              ? TextInputType.number
+              : TextInputType.text,
+          inputFormatters: apenasNumeros
+              ? [FilteringTextInputFormatter.digitsOnly]
+              : null,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return erroVazio;
+            }
+            return null;
+          },
+        ),
+      ),
     );
-   
   }
- 
 }

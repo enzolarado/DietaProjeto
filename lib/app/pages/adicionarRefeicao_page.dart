@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/app/model/alimento.dart';
 import 'package:mydiet/app/repositories/alimento_repository.dart';
+import 'package:mydiet/app/widgets/alimento_card_widget.dart';
 import 'package:mydiet/app/widgets/form_field_wiget.dart';
+import 'package:provider/provider.dart';
 
 class AdicionarRefeicao extends StatefulWidget {
   const AdicionarRefeicao({super.key});
@@ -11,28 +13,35 @@ class AdicionarRefeicao extends StatefulWidget {
 }
 
 class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
-  final tabela = AlimentoRepository.tabela;
+  late AlimentoRepository alimentosTabela;
+  final tabela = []; //AlimentoRepository.alimentosTabela;
   String? valorSelecionado;
   final _formRef = GlobalKey<FormState>();
   List<Alimento> selecionados = [];
   final _nomeRefeicao = TextEditingController();
 
-  void criarRefeicao(){
-  if (_formRef.currentState!.validate() && selecionados.isNotEmpty) {
+  void criarRefeicao() {
+    if (_formRef.currentState!.validate() && selecionados.isNotEmpty) {
       // Salvar o alimento
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Refeicao criada com sucesso!'),backgroundColor: Colors.green,),
+      );
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Refeicao criada com sucesso!')),
-      );
-    }else{
+    } else {
       if (selecionados.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Selecione pelo menos um alimento",style: TextStyle(color: Colors.red),), )
-        ,
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Selecione pelo menos um alimento",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
-}
+  }
+
   @override
   void dispose() {
     _nomeRefeicao.dispose();
@@ -41,7 +50,7 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
 
   @override
   Widget build(BuildContext context) {
-    
+    alimentosTabela = Provider.of<AlimentoRepository>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Criar Refeicao'),
@@ -55,81 +64,91 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
               child: Column(
                 children: [
                   CampoTexto(
-                      controller: _nomeRefeicao, 
-                      label: "Digite o nome da refeição",
-                      apenasNumeros: false,
-                      erroVazio: "Digite um nome para a refeição!",
-                    ),
-                    SizedBox(height: 15,),
+                    controller: _nomeRefeicao,
+                    label: "Digite o nome da refeição",
+                    apenasNumeros: false,
+                    erroVazio: "Digite um nome para a refeição!",
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   DropdownButtonFormField(
-                  initialValue: valorSelecionado,
-                  hint: Text("Selecione o período da refeição"),
-                  items: [
-                    DropdownMenuItem(value: "1", child: Text("Café da Manhã"),),
-                    DropdownMenuItem(value: "2", child: Text("Almoço"),),
-                    DropdownMenuItem(value: "3", child: Text("Lanche da Tarde"),),
-                    DropdownMenuItem(value: "4", child: Text("Janta"),),
-                  ],
-                   onChanged: (value) {
+                    initialValue: valorSelecionado,
+                    hint: Text("Selecione o período da refeição"),
+                    items: [
+                      DropdownMenuItem(
+                        value: "1",
+                        child: Text("Café da Manhã"),
+                      ),
+                      DropdownMenuItem(
+                        value: "2",
+                        child: Text("Almoço"),
+                      ),
+                      DropdownMenuItem(
+                        value: "3",
+                        child: Text("Lanche da Tarde"),
+                      ),
+                      DropdownMenuItem(
+                        value: "4",
+                        child: Text("Janta"),
+                      ),
+                    ],
+                    onChanged: (value) {
                       setState(() {
-                                  valorSelecionado = value;
-                                  });
+                        valorSelecionado = value;
+                      });
                     },
                     validator: (value) {
-                          if (value == null) {
-                            return "Selecione um período";
-                          }
-                          return null;
-                        },
+                      if (value == null) {
+                        return "Selecione um período";
+                      }
+                      return null;
+                    },
                   ),
-                  
                 ],
               ),
             ),
-            ),
+          ),
 
           Expanded(
-            child: ListView.separated(
-              itemBuilder: (BuildContext content, int alimento){
-                return ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                    ),
-                  leading: selecionados.contains(tabela[alimento])
-                  ? CircleAvatar(
-                    child: Icon((Icons.check)),
-                    ):
-                    Icon(Icons.square_outlined),
-                  title: Text(tabela[alimento].nome, style: TextStyle(fontSize: 25),),
-                  subtitle: Text(
-                      "Gordura: ${tabela[alimento].gordura}g\n"
-                      "Caloria: ${tabela[alimento].caloria}g\n"
-                      "Carboidratos: ${tabela[alimento].carboidratos}g\n"
-                      "Proteína: ${tabela[alimento].proteina}g",
-                  ),
-                  selected: selecionados.contains(tabela[alimento]),
-                  selectedTileColor: Colors.greenAccent,
-                  onLongPress: (){
-                    setState(() {
-                      (selecionados.contains(tabela[alimento]))
-                          ? selecionados.remove(tabela[alimento])
-                          : selecionados.add(tabela[alimento]);
-                    });
-                  },
-                );
+            child: Consumer<AlimentoRepository>(
+              builder: (context, alimentosTabela, child) {
+                return alimentosTabela.listaAlimentos.isEmpty
+                    ? ListTile(
+                        title: Text(
+                          'Nenhum alimento encontrado, crie-os antes de adicionar uma refeição!',
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: alimentosTabela.listaAlimentos.length,
+                        itemBuilder: (_, index) {
+                          final selecionado = selecionados.contains(alimentosTabela.listaAlimentos[index]);
+                          final alimento = alimentosTabela.listaAlimentos[index];
+                          return AlimentosCard(
+                            alimento: alimento,
+                            selecionado: selecionado,
+                            onTap: () {
+                              setState(() {
+                                if (selecionado) {
+                                  selecionados.remove(alimento);
+                                } else {
+                                  selecionados.add(alimento);
+                                }
+                              });
+                            },
+                          );
+                        },
+                      );
               },
-              padding: EdgeInsets.all(16),
-              separatorBuilder: (_, _) => Divider(), 
-              itemCount: tabela.length),
+            ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        
         onPressed: criarRefeicao,
         child: Icon(Icons.add),
-        ),
-         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

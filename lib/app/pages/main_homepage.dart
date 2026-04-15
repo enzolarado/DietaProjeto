@@ -37,6 +37,7 @@ void adicionarRefeicao() {
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyDiet'),
+        
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -66,9 +67,8 @@ void adicionarRefeicao() {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
-        child: Container(
+        child: SizedBox(
           height: 50,
-          color: Colors.red,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
