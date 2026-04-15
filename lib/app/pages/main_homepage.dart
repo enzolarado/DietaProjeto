@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'adicionarAlimento_page.dart';
 import 'adicionarRefeicao_page.dart';
+import 'configuracoes_page.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
- 
+
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
 
@@ -13,6 +14,31 @@ class MainHome extends StatefulWidget {
 }
 
 class _MainHomeState extends State<MainHome> {
+  int _paginaAtual = 0;
+
+  final List<Widget> _paginas = [
+    ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const SizedBox(height: 30),
+        Container(
+          padding: const EdgeInsets.all(16),
+          height: 150,
+          color: Colors.red[100],
+          child: const Center(child: Text('Dia atual...')),
+        ),
+        const SizedBox(height: 60),
+        Container(
+          height: 150,
+          color: Colors.red[200],
+          child: const Center(child: Text('Dia anterior...')),
+        ),
+      ],
+    ),
+    const Center(),
+    const ConfiguracoesPage(),
+    const Center(),
+  ];
 
   void adicionarAlimento() {
       Navigator.push(
@@ -38,31 +64,7 @@ void adicionarRefeicao() {
       appBar: AppBar(
         title: const Text('MyDiet'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        
-        children: [
-          const SizedBox(height: 30),
-          Container(
-            padding: const EdgeInsets.all(16),
-            height: 150,
-            color: Colors.red[100],
-            child: const Center(
-              child: Text('Dia atual...'),
-            ),
-          ),
-
-          const SizedBox(height: 60),
-          Container(
-            height: 150,
-            color: Colors.red[200],
-            child: const Center(
-              child: Text('Dia anterior...'),
-              ),
-          ),
-          
-        ],
-      ),
+      body: _paginas[_paginaAtual],
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
@@ -73,11 +75,11 @@ void adicionarRefeicao() {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               
-              IconButton(onPressed: () {}, icon: const Icon(Icons.home)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.food_bank_outlined)),
+              IconButton(onPressed: () { setState(() { _paginaAtual = 0; }); }, icon: const Icon(Icons.home)),
+              IconButton(onPressed: () { setState(() { _paginaAtual = 1; }); }, icon: const Icon(Icons.food_bank_outlined)),
               const SizedBox(width: 48),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
+              IconButton(onPressed: () { setState(() { _paginaAtual = 2; }); }, icon: const Icon(Icons.settings)),
+              IconButton(onPressed: () { setState(() { _paginaAtual = 3; }); }, icon: const Icon(Icons.person)),
             ],
           ),
         ),
@@ -85,7 +87,7 @@ void adicionarRefeicao() {
       floatingActionButton:SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
-     
+
         children: [
           SpeedDialChild(
             child: Icon(FontAwesomeIcons.appleWhole),
@@ -110,4 +112,3 @@ void adicionarRefeicao() {
   
   
 }
-
