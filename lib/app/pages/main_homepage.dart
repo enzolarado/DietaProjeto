@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mydiet/app/pages/mostrarRefeicoes_page.dart';
 import 'adicionarAlimento_page.dart';
 import 'adicionarRefeicao_page.dart';
 import 'configuracoes_page.dart';
@@ -49,6 +50,15 @@ class _MainHomeState extends State<MainHome> {
     );
 }
 
+ void mostrarRefeicao() {
+      Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => MostrarRefeicao(),
+      ),
+    );
+}
+
 void adicionarRefeicao() {
   Navigator.push(
     context, 
@@ -76,7 +86,7 @@ void adicionarRefeicao() {
             children: [
               
               IconButton(onPressed: () { setState(() { _paginaAtual = 0; }); }, icon: const Icon(Icons.home)),
-              IconButton(onPressed: () { setState(() { _paginaAtual = 1; }); }, icon: const Icon(Icons.food_bank_outlined)),
+              IconButton(onPressed: () { mostrarRefeicao();setState(() { _paginaAtual = 1; }); }, icon: const Icon(Icons.food_bank_outlined)),
               const SizedBox(width: 48),
               IconButton(onPressed: () { setState(() { _paginaAtual = 2; }); }, icon: const Icon(Icons.settings)),
               IconButton(onPressed: () { setState(() { _paginaAtual = 3; }); }, icon: const Icon(Icons.person)),
