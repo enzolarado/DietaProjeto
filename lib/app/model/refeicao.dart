@@ -2,7 +2,7 @@ import 'package:mydiet/app/model/alimento.dart';
 
 class Refeicao {
   String nomeRefeicao;
-  String dataRefeicao;
+  DateTime dataRefeicao;
   List<Alimento> alimentoListaRefeicao;
   String periodoRefeicao;
 

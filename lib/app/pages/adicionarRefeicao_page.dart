@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/app/model/alimento.dart';
+import 'package:mydiet/app/model/refeicao.dart';
 import 'package:mydiet/app/repositories/alimento_repository.dart';
+import 'package:mydiet/app/repositories/refeicao_repository.dart';
 import 'package:mydiet/app/widgets/alimento_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +24,32 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
   String? _erroDataHora;
 
   void criarRefeicao() {
+    if (_dataSelecionada == null || _horaSelecionada == null) {
+      setState(() {
+        _erroDataHora = "Selecione data e hora";
+      });
+      return;
+    }
+
     if (_formRef.currentState!.validate() && selecionados.isNotEmpty) {
       // Salvar o alimento
+      final dataFinal = DateTime(
+        _dataSelecionada!.year,
+        _dataSelecionada!.month,
+        _dataSelecionada!.day,
+        _horaSelecionada!.hour,
+        _horaSelecionada!.minute,
+      );
+      final refeicaoRepository = context.read<RefeicaoRepository>();
+      refeicaoRepository.saveRefeicao(
+        Refeicao(
+          nomeRefeicao: _nomeRefeicao.text,
+          dataRefeicao: dataFinal,
+          alimentoListaRefeicao: selecionados,
+          periodoRefeicao: valorSelecionado.toString(),
+        ),
+      );
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Refeicao criada com sucesso!'),
@@ -142,6 +168,7 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                                           20,
                                         ),
                                       ),
+                                      errorText: _erroDataHora
                                     ),
                                     child: Text(
                                       _dataSelecionada == null
@@ -151,9 +178,9 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                                   ),
                                 ),
                               ),
-            
+
                               SizedBox(width: 10),
-            
+
                               // HORA
                               Expanded(
                                 child: InkWell(
@@ -182,7 +209,7 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                           SizedBox(
                             height: 20,
                           ),
-            
+
                           DropdownButtonFormField<String>(
                             initialValue: valorSelecionado,
                             decoration: InputDecoration(
@@ -199,20 +226,20 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                             hint: Text("Selecione o período da refeição"),
                             items: [
                               DropdownMenuItem(
-                                value: "1",
+                                value: "Café da Manhã",
                                 child: Text("Café da Manhã"),
                               ),
                               DropdownMenuItem(
-                                value: "2",
+                                value: "Almoço",
                                 child: Text("Almoço"),
                               ),
                               DropdownMenuItem(
-                                value: "3",
+                                value: "Lanche da Tarde",
                                 child: Text("Lanche da Tarde"),
                               ),
                               DropdownMenuItem(
-                                value: "4",
-                                child: Text("Janta"),
+                                value: "Jantar",
+                                child: Text("Jantar"),
                               ),
                             ],
                             onChanged: (value) {
@@ -269,7 +296,6 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                                   ),
                                 )
                               : ListView.builder(
-                               
                                   itemCount:
                                       alimentosTabela.listaAlimentos.length,
                                   itemBuilder: (_, index) {
