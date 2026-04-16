@@ -4,6 +4,7 @@ import 'package:mydiet/app/pages/mostrarRefeicoes_page.dart';
 import 'adicionarAlimento_page.dart';
 import 'adicionarRefeicao_page.dart';
 import 'configuracoes_page.dart';
+import 'perfil_page.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -38,7 +39,7 @@ class _MainHomeState extends State<MainHome> {
     ),
     const MostrarRefeicao(),
     const ConfiguracoesPage(),
-    const Center(),
+    const PerfilPage(),
   ];
 
   void adicionarAlimento() {
