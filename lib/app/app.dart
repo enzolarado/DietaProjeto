@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/app/pages/main_homepage.dart';
-import 'package:mydiet/app/theme/themeController.dart';
+import 'package:mydiet/app/theme/themecontroller.dart';
 import 'package:provider/provider.dart';
 
 
@@ -14,7 +14,6 @@ class App extends StatelessWidget {
       title: 'MyDiet',
       debugShowCheckedModeBanner: false,
       themeMode: themeController.themeMode,
-
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,

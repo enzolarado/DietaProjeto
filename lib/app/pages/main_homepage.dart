@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mydiet/app/pages/mostrarRefeicoes_page.dart';
+import 'package:mydiet/app/pages/adicionar_alimento_page.dart';
+import 'package:mydiet/app/pages/adicionar_refeicao_page.dart';
+import 'package:mydiet/app/pages/mostrar_refeicoes_page.dart';
 import 'package:mydiet/app/repositories/refeicao_repository.dart';
 import 'package:mydiet/app/model/refeicao.dart';
 import 'package:provider/provider.dart';
-import 'adicionarAlimento_page.dart';
-import 'adicionarRefeicao_page.dart';
 import 'configuracoes_page.dart';
 import 'perfil_page.dart';
 

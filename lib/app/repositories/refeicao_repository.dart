@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:mydiet/app/model/alimento.dart';
 import 'package:mydiet/app/model/refeicao.dart';
 
 class RefeicaoRepository extends ChangeNotifier {
@@ -21,6 +22,14 @@ class RefeicaoRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removerAlimento(Refeicao refeicao, Alimento alimento) {
+    refeicao.alimentoListaRefeicao.remove(alimento);
+     if (refeicao.alimentoListaRefeicao.isEmpty) {
+    _listaRefeicoes.remove(refeicao);
+    }
+    notifyListeners();
+  }
+
   void saveAll(List<Refeicao> refeicoes) {
     for (var refeicao in refeicoes) {
       if (!_listaRefeicoes.contains(refeicao)) _listaRefeicoes.add(refeicao);
@@ -34,10 +43,14 @@ class RefeicaoRepository extends ChangeNotifier {
   }
 
   List<Refeicao> get refeicoesDoDia {
-  return listaRefeicoes.where((refeicao) {
-    return refeicao.dataRefeicao.year == _dataSelecionada.year &&
-        refeicao.dataRefeicao.month == _dataSelecionada.month &&
-        refeicao.dataRefeicao.day == _dataSelecionada.day;
-  }).toList();
-}
+    return listaRefeicoes.where((refeicao) {
+      return refeicao.dataRefeicao.year == _dataSelecionada.year &&
+          refeicao.dataRefeicao.month == _dataSelecionada.month &&
+          refeicao.dataRefeicao.day == _dataSelecionada.day;
+    }).toList();
+  }
+
+  void editarAlimento() {
+        notifyListeners();
+      }
 }

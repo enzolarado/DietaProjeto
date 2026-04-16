@@ -32,7 +32,6 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
     }
 
     if (_formRef.currentState!.validate() && selecionados.isNotEmpty) {
-      // Salvar o alimento
       final dataFinal = DateTime(
         _dataSelecionada!.year,
         _dataSelecionada!.month,
@@ -153,7 +152,6 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                           ),
                           Row(
                             children: [
-                              // DATA
                               Expanded(
                                 child: InkWell(
                                   onTap: _selecionarData,
@@ -168,11 +166,11 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                                           20,
                                         ),
                                       ),
-                                      errorText: _erroDataHora
+                                      errorText: _erroDataHora,
                                     ),
                                     child: Text(
                                       _dataSelecionada == null
-                                          ? "Selecionar"
+                                          ? "Selecione dia"
                                           : "${_dataSelecionada!.day}/${_dataSelecionada!.month}/${_dataSelecionada!.year}",
                                     ),
                                   ),
@@ -197,7 +195,7 @@ class _AdicionarRefeicaoState extends State<AdicionarRefeicao> {
                                     ),
                                     child: Text(
                                       _horaSelecionada == null
-                                          ? "Selecionar"
+                                          ? "Selecione hora"
                                           : "${_horaSelecionada!.hour.toString().padLeft(2, '0')}:"
                                                 "${_horaSelecionada!.minute.toString().padLeft(2, '0')}",
                                     ),

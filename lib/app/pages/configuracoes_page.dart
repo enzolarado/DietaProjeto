@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydiet/app/theme/themeController.dart';
+import 'package:mydiet/app/theme/themecontroller.dart';
 import 'package:provider/provider.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
