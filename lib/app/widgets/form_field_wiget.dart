@@ -25,7 +25,7 @@ class CampoTexto extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: SizedBox(
-        height: 60, // 👈 controla altura
+        height: 60,
         child: TextFormField(
           controller: controller,
           style: const TextStyle(fontSize: 18),
@@ -33,7 +33,6 @@ class CampoTexto extends StatelessWidget {
             labelText: label,
             prefixIcon: icone != null ? Icon(icone) : null,
 
-            // 👇 borda arredondada
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -45,7 +44,6 @@ class CampoTexto extends StatelessWidget {
               borderSide: const BorderSide(width: 2),
             ),
 
-            // 👇 espaço interno (deixa mais "gordinho")
             contentPadding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 12,

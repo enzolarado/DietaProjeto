@@ -14,7 +14,6 @@ class App extends StatelessWidget {
       title: 'MyDiet',
       debugShowCheckedModeBanner: false,
       themeMode: themeController.themeMode,
-
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,

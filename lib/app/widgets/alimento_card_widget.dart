@@ -18,7 +18,8 @@ class AlimentosCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
   decoration: BoxDecoration(
-    color: selecionado ? Colors.greenAccent : Colors.transparent,
+    //QUANDO DER TEMPO CONSERTAR O COLOR, ELE TA BUGANDO E APARECENDO ONDE NÃO DEVIA
+    //color: selecionado ? Colors.greenAccent : Colors.transparent,
     borderRadius: BorderRadius.circular(15),
   ),
   child: InkWell(
@@ -33,6 +34,8 @@ class AlimentosCard extends StatelessWidget {
         style: const TextStyle(fontSize: 25),
       ),
       subtitle: Text(
+        "Unidade de medida: ${alimento.unidadeMedida}\n"
+        "Valor da cota: ${alimento.valorCota}\n"
         "Gordura: ${alimento.gordura}g\n"
         "Caloria: ${alimento.caloria}g\n"
         "Carboidratos: ${alimento.carboidratos}g\n"
